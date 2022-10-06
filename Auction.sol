@@ -36,15 +36,39 @@ contract Auction {
     }
 
     //abstract functions
+
+    //참가자가 매수 신청액을 지정하는 함수.
+    //경매의 호가 => 누적 방식
     function bid() public payable returns(bool){}
+
+    //경매 종료 후, 참가자가 자신의 매수 신청액을 회수하는 함수
     function withdraw() public returns(bool){}
+
+    // 경매 소유자가 자신이 시작한 경매를 취소하는 함수
     function cancel_auction() external returns (bool){}
 
-    //events
+    //event 
     event BidEvent(address indexed highestBidder, uint256 highestBid);
     event withdrawalEvent(address withdrawer,uint256 amount);
     event CanceledEvent(string message, uint256 time);
 }
+
+//About Function
+// constant, view: 함수가 계약의 상태를 변경하지 못할 경우
+// pure : 함수가 계약에 저장된 상태를 변경하기는 커녕 읽지도 않을 경우
+// payable : 함수가 이더를 받을 수 있음
+
+//조건, 오류 처리
+
+// assert : 조건이 충족하지 않는 경우 예외를 발생시킴. 예외 발생 시 남은 모든 가스가
+//          소비되며 모든 변경 사항이 철회 (계약 내부에서 발생한 오류)
+//    사용 => 계약에 해가 되는 연산을 방지할 때 사용
+//require : 조건이 충족하지 않는 경우 예외를 발생. 예외 발생 시 남은 모든
+//           가스가 호출자에게 환급
+//    사용 => 유효한 조건을 보장하는데에 사용
+// revert : 실행을 중지하고 상태 변경을 철회. 가스를 환급
+// throw : 예외를 발생시키고, 남은 모든 가스를 소비
+
 
 
 
